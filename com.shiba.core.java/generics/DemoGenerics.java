@@ -120,7 +120,7 @@ public class DemoGenerics {
     //Creating static methods for displaying co-ordinates
     static void showXY(coordinates<?> coordinates){
         System.out.println("X Y Coordinates: ");
-        for (int i = 0; i < coordinates.coordinates.length; i++) {
+        for(int i = 0; i < coordinates.coordinates.length; i++) {
             System.out.println(coordinates.coordinates[i].x + " " +
                                coordinates.coordinates[i].y + " ");
         }
@@ -130,7 +130,7 @@ public class DemoGenerics {
     //Creating static methods for displaying co-ordinates
     static void showXYZ(coordinates<? extends threeD> coordinates){
         System.out.println("X Y Z Coordinates: ");
-        for (int i = 0; i < coordinates.coordinates.length; i++) {
+        for(int i = 0; i < coordinates.coordinates.length; i++) {
             System.out.println(coordinates.coordinates[i].x + " " +
                                coordinates.coordinates[i].y + " " +
                                coordinates.coordinates[i].z + " ");
@@ -141,7 +141,7 @@ public class DemoGenerics {
     //Creating static methods for displaying co-ordinates
     static void showXYZT(coordinates<? extends fourD> coordinates){
         System.out.println("X Y Coordinates: ");
-        for (int i = 0; i < coordinates.coordinates.length; i++) {
+        for(int i = 0; i < coordinates.coordinates.length; i++) {
             System.out.println(coordinates.coordinates[i].x + " " +
                                coordinates.coordinates[i].y + " " +
                                coordinates.coordinates[i].z + " " +
@@ -150,6 +150,14 @@ public class DemoGenerics {
         System.out.println();
     }
 
+    static<T extends Comparable<T>, V extends T> boolean isIn(T x, V[] y) {
+        for (int i = 0; i < y.length; i++) {
+            if (x.equals(y[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
     public static void main(String args[]){
         //Creating a new object of type Integer
         Gen<Integer> integerObject = new Gen<>(88);
@@ -235,6 +243,12 @@ public class DemoGenerics {
         coordinates<fourD> fourDimensionLocations = new coordinates<>(fourDimensions);
         System.out.println("The four dimensional positions are: ");
         showXYZT(fourDimensionLocations);
+        
 
+        Integer nums[] = {10, 30, 43, 45, 74};
+        String colors[] = {"red", "blue", "green", "orange"};
+        
+        System.out.println("Is 20 in numbers list? " + isIn(20,nums));
+        System.out.println("Is blue in colors list? " + isIn("blue",colors));
     }
 }
