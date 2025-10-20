@@ -1,5 +1,46 @@
 package generics;
 
+//Example of a Generic Interface
+interface MinMax<T extends Comparable<T>>{
+    T min();
+    T max();
+}
+
+class MinMaxClass<T extends Comparable<T>> implements MinMax<T>{
+    T[] elements;
+    MinMaxClass(T elements[]){
+        this.elements = elements;
+    }
+    public T min(){
+        T minimum = elements[0];
+        for (int i = 1; i < elements.length; i++) {
+            if (elements[i].compareTo(minimum) < 0) {
+                minimum = elements[i];
+            }
+        }
+        return minimum;
+    }
+    public T max(){
+        T maximum = elements[0];
+        for (int i = 1; i < elements.length; i++) {
+            if (elements[i].compareTo(maximum) > 0) {
+                maximum = elements[i];
+            }
+        }
+        return maximum;
+    }
+}
+//Example of a normal class with a Generic constructor
+
+class GenericConstructor{
+    double value;
+    <T extends Number> GenericConstructor(T argument){
+        value = argument.doubleValue();
+    }
+    void showValue(){
+        System.out.println("value: " + value);
+    }
+}
 class twoD{
     int x,y;
     twoD(int x, int y){
@@ -150,7 +191,7 @@ public class DemoGenerics {
         System.out.println();
     }
 
-    static<T extends Comparable<T>, V extends T> boolean isIn(T x, V[] y) {
+        static<T extends Comparable<T>, V extends T> boolean isIn(T x, V[] y) {
         for (int i = 0; i < y.length; i++) {
             if (x.equals(y[i])) {
                 return true;
@@ -243,12 +284,26 @@ public class DemoGenerics {
         coordinates<fourD> fourDimensionLocations = new coordinates<>(fourDimensions);
         System.out.println("The four dimensional positions are: ");
         showXYZT(fourDimensionLocations);
-        
 
         Integer nums[] = {10, 30, 43, 45, 74};
         String colors[] = {"red", "blue", "green", "orange"};
         
         System.out.println("Is 20 in numbers list? " + isIn(20,nums));
         System.out.println("Is blue in colors list? " + isIn("blue",colors));
+
+        GenericConstructor integerConstructor = new GenericConstructor(100);
+        GenericConstructor floatConstructor = new GenericConstructor(100.23f);
+
+        integerConstructor.showValue();
+        floatConstructor.showValue();
+
+        MinMaxClass<Integer> intCompareObject = new MinMaxClass<>(nums);
+        MinMaxClass<String> stringCompareObject = new MinMaxClass<>(colors);
+
+        System.out.println("The minimum of all numbers are: " + intCompareObject.min());
+        System.out.println("The maximum of all numbers are: " + intCompareObject.max());
+
+        System.out.println("The minimum of all colors are: " + stringCompareObject.min());
+        System.out.println("The maximum of all colors are: " + stringCompareObject.max());
     }
 }
